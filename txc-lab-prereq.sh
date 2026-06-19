@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Homebrew not found. Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+else
+  echo "Homebrew already installed."
+fi
+
+echo "Installing lab prerequisites with Homebrew..."
+brew install python@3.12 node bc openjdk maven
+
+if command -v pip3 >/dev/null 2>&1; then
+  echo "Installing uv with pip3..."
+  pip3 install uv
+elif command -v pip >/dev/null 2>&1; then
+  echo "Installing uv with pip..."
+  pip install uv
+else
+  echo "Error: pip was not found after installing Python."
+  exit 1
+fi
+
+echo ""
+echo "Prerequisite installation complete."
+echo "Next steps:"
+echo "  - Agentic Lab: cd txc-lab/agentic-lab && make setup && make init-db"
+echo "  - Data Science Lab: cd txc-lab/datascience-lab/lab && uv venv && source .venv/bin/activate"
+echo "  - Java Upgrade: cd txc-lab/java-upgrade && mvn test"
+
