@@ -14,20 +14,9 @@ else
 fi
 
 echo "Installing lab prerequisites with Homebrew..."
-brew install python@3.12
+brew install python@3.12 uv
 brew install node bc 
 brew install openjdk maven
-
-if command -v pip3 >/dev/null 2>&1; then
-  echo "Installing uv with pip3..."
-  pip3 install uv
-elif command -v pip >/dev/null 2>&1; then
-  echo "Installing uv with pip..."
-  pip install uv
-else
-  echo "Error: pip was not found after installing Python."
-  exit 1
-fi
 
 echo ""
 echo "Prerequisite installation complete."
