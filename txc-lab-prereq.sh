@@ -14,7 +14,9 @@ else
 fi
 
 echo "Installing lab prerequisites with Homebrew..."
-brew install python@3.12 node bc openjdk maven
+brew install python@3.12
+brew install node bc 
+brew install openjdk maven
 
 if command -v pip3 >/dev/null 2>&1; then
   echo "Installing uv with pip3..."
