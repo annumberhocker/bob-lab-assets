@@ -2,27 +2,32 @@
 
 This repository was created to make it easier for lab participants to download the **txc-lab** files
 
-## Prereqs
-Make sure you have access to Bob. You can either install the free 30-day trial version or use a VM provided by instructor
-
-## Download the assets
+## Download the assets and install prerequisites
 Open a terminal window and clone this repository:
 ```
 git clone https://github.com/annumberhocker/bob-lab-assets
-cd bob-lab-assets
 ```
 
-Unzip the  file:
+Change directory to the cloned repository and run the prerequisite script:
 ```
-unzip txc-lab.zip
+cd bob-lab-assets
+./txc-lab-prereq.sh
 ```
+
+This will unzip the assets and install the prerequisites (brew, python@3.12, uv, node, bc, openjdk maven)
 
 ## Lab Instructions
 
+Make sure you have access to Bob. You can either install the free 30-day trial version or use a VM provided by instructor.
+
 - Open and log in to IBM Bob
+
   - If using the VM, you should see a bar at the bottom with a dot grid
+  
     <img width="485" height="94" alt="image" src="https://github.com/user-attachments/assets/4ad40b43-ddbc-451f-9e10-df824d1aa16e" />
+    
   - Open the dot grid and select Bob
+  
     <img width="1400" height="574" alt="image" src="https://github.com/user-attachments/assets/c64383fe-b624-42df-bfb1-6fc1a49b7555" />
     
   You should see a VSCode instance open with a panel like this:

@@ -2,6 +2,10 @@
 
 set -euo pipefail
 
+rm -rf txc-lab
+unzip txc-lab.zip
+rm -r __MACOSX
+
 if ! command -v brew >/dev/null 2>&1; then
   echo "Homebrew not found. Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
