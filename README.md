@@ -4,6 +4,30 @@ This repository was created to make it easier for lab participants to download t
 
 To access Bob, you can either install the free 30-day trial version or use a VM provided by the instructor.
 
+## Access Bob
+
+Option 1: Local Installation (Best Experience) 
+
+Download: https://bob.ibm.com 
+
+Action: Install the software and launch it to ensure it starts without permission errors. 
+
+Note: This requires administrative rights on your laptop.   Your corporate IT group might need to approve the installation/configuration 
+
+Option 2: Techzone VM
+
+Reserve this environment https://techzone.ibm.com/collection/bob-enterprise-sales-assets and select `OCP-V RHEL 9 VM - Bob IDE (IBM-Bob-linux-x64-1.116.0+bob1.0.3)`
+
+<img width="472" height="476" alt="image" src="https://github.com/user-attachments/assets/c632629c-6fe5-42d0-a5ea-72e6114f3320" />
+
+Once the environment is provisioned, you can find the environment under the [Techzone Requests](https://techzone.ibm.com/my/requests?StatusFilter=%5B%22Ready%22%2C%22Scheduled%22%2C%22Provisioning%22%2C%22Pending+Approval%22%5D)
+
+Open the `Environment` tab and you should see a link for the Console and the user id and password.
+
+<img width="1516" height="644" alt="image" src="https://github.com/user-attachments/assets/3b937c02-8e21-4486-86bb-cf97aac57bef" />
+
+Confirmation: If you see a Linux desktop after signing in, you are all set. 
+
 ## Download the assets and install prerequisites
 Open a terminal window (either on your local machine or on the VM provided by the instructor) and clone this repository:
 ```
