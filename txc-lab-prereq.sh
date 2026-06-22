@@ -8,19 +8,17 @@ rm -r __MACOSX
 
 if ! command -v brew >/dev/null 2>&1; then
   echo "Homebrew not found. Installing Homebrew..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   echo >> /home/itzuser/.bashrc
   echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"' >> /home/itzuser/.bashrc
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
-  sudo dnf group install 'Development Tools' && sudo dnf install bubblewrap
+  sudo dnf -y group install 'Development Tools' && sudo dnf -y install bubblewrap
 else
   echo "Homebrew already installed."
 fi
 
 echo "Installing lab prerequisites with Homebrew..."
-brew install python@3.12 uv
-brew install node bc 
-brew install openjdk maven
+NONINTERACTIVE=1 brew install python@3.12 uv node bc openjdk maven
 
 echo ""
 echo "Prerequisite installation complete."
