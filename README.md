@@ -77,12 +77,14 @@ This will unzip the assets and install the prerequisites (brew, python@3.12, uv,
   - Choose “Yes I trust the Authors”.
   - Open the file “lab/step-by-step-lab.md” (right click on it and choose “Open in Preview”)
  
-## Additional resources
 
-[Bobathon Guide](https://pages.github.ibm.com/WW-CE/bobathon-guide/)
-  
   **Lab 2b**: “Java Upgrade”
   
   - open “txc-lab/java-upgrade” folder 
   - Choose “Yes I trust the Authors”.   
-  - Instructions should pop up in a “Welcome” tab 
+  - Instructions should pop up in a “Welcome” tab
+ 
+## Additional resources
+
+[Bobathon Guide](https://pages.github.ibm.com/WW-CE/bobathon-guide/)
+  
