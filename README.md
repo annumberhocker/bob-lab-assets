@@ -76,6 +76,10 @@ This will unzip the assets and install the prerequisites (brew, python@3.12, uv,
   - open “txc-lab/datascience-lab” folder 
   - Choose “Yes I trust the Authors”.
   - Open the file “lab/step-by-step-lab.md” (right click on it and choose “Open in Preview”)
+ 
+## Additional resources
+
+[Bobathon Guide](https://pages.github.ibm.com/WW-CE/bobathon-guide/)
   
   **Lab 2b**: “Java Upgrade”
   
