@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-rm -rf txc-lab
-unzip txc-lab.zip
-rm -r __MACOSX
+#rm -rf txc-lab
+#unzip txc-lab.zip
+#rm -r __MACOSX
 
 if ! command -v brew >/dev/null 2>&1; then
   echo "Homebrew not found. Installing Homebrew..."
