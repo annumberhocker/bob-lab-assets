@@ -1,0 +1,8 @@
+     A***TEXT:Orders by delivery date, route, stop
+     A*
+     A*Orders by delivery date, route, stop
+     A*
+     A          R ORDHDRR                   PFILE(ORDHDR)
+     A          K ODLVDT
+     A          K OROUTE
+     A          K OSTOP

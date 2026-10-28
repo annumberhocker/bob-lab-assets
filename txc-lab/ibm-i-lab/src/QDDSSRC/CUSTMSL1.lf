@@ -1,0 +1,17 @@
+     A***TEXT:Customers by route and stop
+     A*
+     A*Customers by route and stop
+     A*
+     A          R CUSTMSR1                  PFILE(CUSTMAST)
+     A            CUSNBR                    RENAME(CUSTNO)
+     A            CNAME
+     A            CADDR
+     A            CCITY
+     A            CSTATE
+     A            CROUTE
+     A            CSTOP
+     A            PCLASS
+     A            DLVDAY
+     A            CSTAT
+     A          K CROUTE
+     A          K CSTOP

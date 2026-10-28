@@ -1,0 +1,28 @@
+     A***TEXT:Pick confirm / catch weight entry
+     A*
+     A*Pick confirm / catch weight entry
+     A*
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      CF03
+     A                                      CF06
+     A                                      CF12
+     A          R OE020R1
+     A                                      OVERLAY
+     A                                  1  2'DIST400'
+     A                                  1 30'PICK CONFIRM'
+     A                                  1 70DATE EDTCDE(Y)
+     A                                  3  2'Order . . . :'
+     A            SORDNO         7Y 0B  3 17
+     A                                  3 30'Line . . :'
+     A            SLINE          3Y 0B  3 41
+     A                                  5  2'Customer . . :'
+     A            SNAME         30A  O  5 17
+     A                                  7  2'Item . . . . :'
+     A            SITEM          6Y 0O  7 17EDTCDE(Z)
+     A            SIDESC        30A  O  7 26
+     A                                  9  2'Qty to ship  :'
+     A            SQTY           5Y 0O  9 17EDTCDE(Z)
+     A                                 11  2'Scale weight :'
+     A            SCWGHT         7Y 2B 11 17
+     A                                 23  2'F3=Exit  F6=Record wt  F12=Clear'
+     A            SMSG          50A  O 22  2

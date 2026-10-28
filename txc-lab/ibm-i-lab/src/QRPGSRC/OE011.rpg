@@ -1,0 +1,29 @@
+     H***TEXT:Cutoff driver - allocate all open orders
+     H*
+     H* OE011  - NIGHTLY CUTOFF DRIVER                  DKOWALSKI  04/02/98
+     H* CALLED BY ORDCUTOF WITH THE DELIVERY DATE (YYMMDD).
+     H* CALLS OE010 FOR EVERY OPEN ORDER ON THAT DATE.
+     H*
+     FORDHDRL1IF  E           K        DISK
+     I* NUMERIC FILE FIELDS ARE PACKED INSIDE THE PROGRAM. OE010 WANTS A ZONED
+     I* ORDER NUMBER, SO IT GOES THROUGH A DS BEFORE THE CALL.     DK 04/02/98
+     IPDATED      DS
+     I                                        1   60WDLVDT
+     IPORDD       DS
+     I                                        1   70WORDNO
+     C           *ENTRY    PLIST
+     C                     PARM           PDATED
+     C           HDKEY     KLIST
+     C                     KFLD           WDLVDT
+     C           HDKEY     SETLLORDHDRL1
+     C           HDKEY     READEORDHDRL1                 80
+     C           *IN80     DOWEQ'0'
+     C           OSTAT     IFEQ 'O'
+     C                     Z-ADDORDNO     WORDNO
+     C                     CALL 'OE010'
+     C                     PARM           PORDD
+     C                     END
+     C           HDKEY     READEORDHDRL1                 80
+     C                     END
+     C                     SETON                     LR
+     C                     RETRN

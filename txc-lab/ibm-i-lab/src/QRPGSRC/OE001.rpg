@@ -1,0 +1,155 @@
+     H***TEXT:Order entry
+     H*
+     H* OE001  - ORDER ENTRY                            DKOWALSKI  03/09/98
+     H* ONE LINE AT A TIME. ENTER PRICES THE LINE VIA OE005, F6 ADDS IT.
+     H* FIRST ACCEPTED LINE CREATES THE ORDER HEADER.
+     H*
+     FOE001DF CF  E                    WORKSTN
+     FCUSTMASTIF  E           K        DISK
+     FITEMMASTIF  E           K        DISK
+     FORDHDR  UF  E           K        DISK                      A
+     FORDDTL  O   E                    DISK
+     E                    MSG     1  10 50
+     IKEYDS       DS
+     I                                        1   60CUST#
+     I* OE005 WANTS ZONED PARMS. SCREEN FIELDS ARE PACKED INSIDE THE PROGRAM,
+     I* SO THEY ARE STAGED IN THESE DS FIELDS AROUND THE CALL.      DK 03/09/98
+     IPCUSTD      DS
+     I                                        1   60WCUST
+     IPITEMD      DS
+     I                                        1   60WITEM
+     IPQTYD       DS
+     I                                        1   50WQTY
+     IPPRICD      DS
+     I                                        1   72WPRICE
+     ITODAYD      DS
+     I                                        1   60WTODAY
+     I           SDS
+     I                                      254 263 WUSER
+     C* TODAY AS YYMMDD
+     C                     Z-ADDUYEAR     WTODAY
+     C                     MULT 10000     WTODAY
+     C                     Z-ADDUMONTH    WK      40
+     C                     MULT 100       WK
+     C                     ADD  WK        WTODAY
+     C                     ADD  UDAY      WTODAY
+     C                     Z-ADD0         SORDNO
+     C                     Z-ADD0         SLINE
+     C           *IN03     DOWEQ'0'
+     C                     EXFMTOE001R1
+     C                     MOVE *BLANKS   SMSG
+     C           *IN03     IFEQ '0'
+     C           *IN12     IFEQ '1'
+     C                     EXSR RESET
+     C                     ELSE
+     C                     EXSR LINE
+     C                     END
+     C                     END
+     C                     END
+     C                     SETON                     LR
+     C                     RETRN
+     C* LINE: VALIDATE, PRICE, AND ON F6 WRITE THE DETAIL
+     C           LINE      BEGSR
+     C                     Z-ADDSCUST     CUST#
+     C           CUST#     CHAINCUSTMAST             90
+     C           *IN90     IFEQ '1'
+     C                     MOVE MSG,1     SMSG
+     C                     GOTO LINEND
+     C                     END
+     C                     MOVE CNAME     SNAME
+     C           SITEM     IFEQ 0
+     C                     GOTO LINEND
+     C                     END
+     C           SITEM     CHAINITEMMAST             91
+     C           *IN91     IFEQ '1'
+     C                     MOVE MSG,2     SMSG
+     C                     GOTO LINEND
+     C                     END
+     C                     MOVE IDESC     SIDESC
+     C           SQTY      IFEQ 0
+     C                     MOVE MSG,5     SMSG
+     C                     GOTO LINEND
+     C                     END
+     C                     Z-ADDSCUST     WCUST
+     C                     Z-ADDSITEM     WITEM
+     C                     Z-ADDSQTY      WQTY
+     C                     CALL 'OE005'
+     C                     PARM           PCUSTD
+     C                     PARM           PITEMD
+     C                     PARM           PQTYD
+     C                     PARM           TODAYD
+     C                     PARM           PPRICD
+     C                     PARM           SPSRC
+     C                     Z-ADDWPRICE    SPRICE
+     C           SPSRC     IFEQ 'X'
+     C                     MOVE MSG,6     SMSG
+     C                     GOTO LINEND
+     C                     END
+     C           *IN06     IFEQ '1'
+     C           SORDNO    IFEQ 0
+     C                     EXSR NEWORD
+     C                     END
+     C                     ADD  1         SLINE
+     C                     Z-ADDSORDNO    DORDNO
+     C                     Z-ADDSLINE     DLINE
+     C                     Z-ADDSITEM     DITEM
+     C                     Z-ADDSQTY      QTYORD
+     C                     Z-ADD0         QTYSHP
+     C                     Z-ADD0         CWGHT
+     C                     Z-ADDSPRICE    UPRICE
+     C                     MOVE SPSRC     PSRC
+     C                     MOVE ' '       SUBFLG
+     C                     Z-ADD0         DOITEM
+     C                     WRITEORDDTLR
+     C                     MOVE MSG,3     SMSG
+     C                     Z-ADD0         SITEM
+     C                     Z-ADD0         SQTY
+     C                     Z-ADD0         SPRICE
+     C                     MOVE ' '       SPSRC
+     C                     MOVE *BLANKS   SIDESC
+     C                     END
+     C           LINEND    ENDSR
+     C* NEWORD: NEXT ORDER NUMBER IS LAST ONE PLUS ONE
+     C           NEWORD    BEGSR
+     C           *HIVAL    SETGTORDHDR
+     C                     READPORDHDR                   95
+     C           *IN95     IFEQ '1'
+     C                     Z-ADD1         WORDNO  70
+     C                     ELSE
+     C           ORDNO     ADD  1         WORDNO
+     C                     END
+     C                     Z-ADDWORDNO    ORDNO
+     C                     Z-ADDSCUST     OCUST
+     C                     Z-ADDWTODAY    ODLVDT
+     C                     Z-ADDCROUTE    OROUTE
+     C                     Z-ADDCSTOP     OSTOP
+     C                     MOVE 'O'       OSTAT
+     C                     Z-ADDWTODAY    OENTDT
+     C                     MOVE WUSER     OENTBY
+     C                     WRITEORDHDRR
+     C                     Z-ADDWORDNO    SORDNO
+     C                     Z-ADD0         SLINE
+     C                     ENDSR
+     C           RESET     BEGSR
+     C                     Z-ADD0         SORDNO
+     C                     Z-ADD0         SLINE
+     C                     Z-ADD0         SCUST
+     C                     Z-ADD0         SITEM
+     C                     Z-ADD0         SQTY
+     C                     Z-ADD0         SPRICE
+     C                     MOVE *BLANKS   SNAME
+     C                     MOVE *BLANKS   SIDESC
+     C                     MOVE ' '       SPSRC
+     C                     MOVE MSG,4     SMSG
+     C                     ENDSR
+**
+CUSTOMER NOT FOUND                                
+ITEM NOT FOUND                                    
+LINE ADDED - ENTER NEXT ITEM OR F3 TO EXIT        
+ORDER CANCELLED                                   
+ENTER QUANTITY                                    
+ITEM NOT PRICED                                   
+WEIGHT RECORDED                                   
+ORDER LINE NOT FOUND                              
+CUSTOMER UPDATED                                  
+CUSTOMER ADDED                                    

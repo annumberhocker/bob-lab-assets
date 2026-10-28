@@ -1,0 +1,14 @@
+     A***TEXT:Customer contract prices
+     A*
+     A*Customer contract prices
+     A*DIST400 foodservice distribution sample  (c) lab kit
+     A*
+     A          R CONTRACR                  TEXT('Customer contract prices')
+     A            CCUST          6S 0       COLHDG('Customer')
+     A            CITEM          6S 0       COLHDG('Item')
+     A            CPRICE         7P 2       COLHDG('Contract price')
+     A            CEFFDT         6S 0       COLHDG('Effective YYMMDD')
+     A            CEXPDT         6S 0       COLHDG('Expires YYMMDD')
+     A          K CCUST
+     A          K CITEM
+     A          K CEFFDT

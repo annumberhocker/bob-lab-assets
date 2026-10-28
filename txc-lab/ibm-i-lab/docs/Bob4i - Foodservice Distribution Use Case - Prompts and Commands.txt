@@ -1,0 +1,62 @@
+Bob for i, Foodservice Distribution Use Case lab: prompts and commands to paste
+===============================================================================
+Replace nn with your two-digit participant ID everywhere (LABnn, DIST4nn).
+Every line is pasted into the Bob chat, in the order the Participant Guide asks for it.
+
+
+-- Exercise 0: Connect to IBM i and have Bob write the library overview
+
+[bob] Scan library DIST4nn on the IBM i. List every program, file and source member, read the source, and write a file named AGENTS.md in this workspace that describes what the application is, which programs call which, which files each program reads or writes, and the conventions you notice. Everything is on the server; do not ask me to add files.
+
+-- Exercise 1: Understand a program you have never seen
+
+[bob] What does this program do?
+
+-- Now go deeper
+
+[bob] How does the program decide whether a contract price is still in effect?
+
+-- Then ask about 2050
+
+[bob] What happens to a contract that expires in 2050?
+
+-- Exercise 2: What breaks if I change this?
+
+[bob] If we expanded the customer number in DIST4nn from 6 to 8 digits for the acquisition, what would break? Show me every program, file and screen that carries it, and draw a diagram.
+
+-- Only if Bob found fewer than four names for the field
+
+[bob] The logical file calls it CUSNBR, the order and contract files call it OCUST and CCUST, and the screens call it SCUST. Find those too and give me the new total.
+
+-- Now ask the question that catches the missing three
+
+[bob] What happens to OE010 and OE011 the first night the cutoff runs after ORDHDR is rebuilt with the new format? They never use the customer number.
+[bob] Does ORDHDR in DIST4nn have level checking on? Check the file attribute, then tell me again what actually happens the first night, and whether that changes the fix.
+
+-- Now draw the flow
+
+[bob] Draw the order-to-cash flow of DIST4nn as a diagram: from order entry through pricing, allocation, pick confirm and the nightly cutoff. Show which program calls which, and which files each one reads or writes.
+
+-- Exercise 3: Map the database
+
+[bob] /erd DIST4nn
+
+-- Exercise 5: Modernize and compile
+
+[bob] Can you modernize this program?
+
+-- Now prove it still prices the same
+
+[bob] Compare the original OE005 in QRPGSRC with the modernized version in QRPGLESRC. Confirm the pricing precedence is identical: contract, then price class, then list, with the catch-weight and class S adjustments. For customer 100230, item 201410, quantity 5, order date 15 October 2026, what unit price and price source does each version return?
+
+-- Only if Bob reports a difference
+
+[bob] Show me the line in each version that produces the different result, side by side, and tell me which one is wrong.
+
+-- Part A: the runbook
+
+[bob] Write a runbook for this nightly job for the operations team: what it does step by step, what must be true before it runs, what each step's failure looks like on the job log, and how to restart safely from each step without allocating any order twice.
+
+-- Part B: the audit evidence
+
+[bob] Which objects in DIST4nn were created or changed today? For each one show the user who created it, the owner, when it was created, the source file and member it was built from, and the program attribute.

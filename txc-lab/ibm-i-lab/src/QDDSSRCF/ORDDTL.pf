@@ -1,0 +1,19 @@
+     A***TEXT:Order detail lines
+     A*
+     A*Order detail lines
+     A*DIST400 foodservice distribution sample  (c) lab kit
+     A*
+     A                                      UNIQUE
+     A          R ORDDTLR                   TEXT('Order detail lines')
+     A            DORDNO         7S 0       COLHDG('Order')
+     A            DLINE          3S 0       COLHDG('Line')
+     A            DITEM          6S 0       COLHDG('Item')
+     A            QTYORD         5S 0       COLHDG('Qty ordered')
+     A            QTYSHP         5S 0       COLHDG('Qty shipped')
+     A            CWGHT          7P 2       COLHDG('Catch weight')
+     A            UPRICE         7P 2       COLHDG('Unit price')
+     A            PSRC           1A         COLHDG('Price source')
+     A            SUBFLG         1A         COLHDG('Sub')
+     A            DOITEM         6S 0       COLHDG('Orig item')
+     A          K DORDNO
+     A          K DLINE

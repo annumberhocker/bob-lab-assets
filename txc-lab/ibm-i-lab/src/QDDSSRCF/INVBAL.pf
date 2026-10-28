@@ -1,0 +1,13 @@
+     A***TEXT:Inventory balance by warehouse
+     A*
+     A*Inventory balance by warehouse
+     A*DIST400 foodservice distribution sample  (c) lab kit
+     A*
+     A                                      UNIQUE
+     A          R INVBALR                   TEXT('Inventory balance by wareh')
+     A            IWHSE          2A         COLHDG('Whse')
+     A            IITEM          6S 0       COLHDG('Item')
+     A            ONHAND         9B 0       COLHDG('On hand')
+     A            ALLOC          9B 0       COLHDG('Allocated')
+     A          K IWHSE
+     A          K IITEM

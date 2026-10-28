@@ -1,0 +1,33 @@
+     A***TEXT:Order entry screen
+     A*
+     A*Order entry screen
+     A*
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      CF03(03 'Exit')
+     A                                      CF06(06 'Accept line')
+     A                                      CF12(12 'Cancel')
+     A          R OE001R1
+     A                                      OVERLAY
+     A                                  1  2'DIST400'
+     A                                  1 30'ORDER ENTRY'
+     A                                  1 70DATE EDTCDE(Y)
+     A                                  3  2'Order . . . :'
+     A            SORDNO         7Y 0O  3 17EDTCDE(Z)
+     A                                  3 30'Line . . :'
+     A            SLINE          3Y 0O  3 41EDTCDE(Z)
+     A                                  5  2'Customer . . :'
+     A            SCUST          6Y 0B  5 17
+     A            SNAME         30A  O  5 26
+     A                                  7  2'Item . . . . :'
+     A            SITEM          6Y 0B  7 17
+     A            SIDESC        30A  O  7 26
+     A                                  9  2'Quantity . . :'
+     A            SQTY           5Y 0B  9 17
+     A                                  9 30'Unit price :'
+     A            SPRICE         7Y 2O  9 43EDTCDE(2)
+     A                                  9 55'Source :'
+     A            SPSRC          1A  O  9 64
+     A                                 12  2'Enter customer, item and quantity'
+     A                                 13  2'then F6 to accept the line.'
+     A                                 23  2'F3=Exit  F6=Accept  F12=Cancel'
+     A            SMSG          50A  O 22  2

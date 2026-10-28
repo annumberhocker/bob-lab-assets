@@ -1,0 +1,18 @@
+     A***TEXT:Customer master
+     A*
+     A*Customer master
+     A*DIST400 foodservice distribution sample  (c) lab kit
+     A*
+     A                                      UNIQUE
+     A          R CUSTMASR                  TEXT('Customer master')
+     A            CUSTNO         6S 0       COLHDG('Customer')
+     A            CNAME         30A         COLHDG('Name')
+     A            CADDR         30A         COLHDG('Address')
+     A            CCITY         20A         COLHDG('City')
+     A            CSTATE         2A         COLHDG('St')
+     A            CROUTE         3S 0       COLHDG('Route')
+     A            CSTOP          3S 0       COLHDG('Stop')
+     A            PCLASS         1A         COLHDG('Price class')
+     A            DLVDAY         7A         COLHDG('Dlv days')
+     A            CSTAT          1A         COLHDG('Status')
+     A          K CUSTNO

@@ -1,0 +1,109 @@
+     H***TEXT:Price lookup - contract/class/list
+     H*
+     H* OE005  - PRICE LOOKUP                           DKOWALSKI  03/12/98
+     H* CALLED BY OE001 FOR EVERY ORDER LINE.
+     H* RETURNS UNIT PRICE AND SOURCE: C=CONTRACT P=PRICE CLASS L=LIST
+     H*                                X=ITEM NOT FOUND
+     H* MOD 11/02/99 DK  DATE WINDOW FOR Y2K, SEE WINDOW SUBR
+     H* MOD 06/15/01 TM  SCHOOL DISCOUNT PER R.MARTIN (NO TICKET)
+     H*
+     FCUSTMASTIF  E           K        DISK
+     FITEMMASTIF  E           K        DISK
+     FCONTRACTIF  E           K        DISK
+     FPRICELSTIF  E           K        DISK
+     IKEYDS       DS
+     I                                        1   60CUST#
+     I* PARMS LIVE IN A DS SO THEY ARE ZONED. C-SPEC FIELDS ARE PACKED AND
+     I* THE SCREENS AND CL PASS ZONED DIGITS.                    DK 03/12/98
+     I* AN *ENTRY PARM CANNOT BE A DS SUBFIELD, SO EACH PARM IS ITS OWN DS.
+     IPCUSTD      DS
+     I                                        1   60WCUST
+     IPITEMD      DS
+     I                                        1   60WITEM
+     IPQTYD       DS
+     I                                        1   50WQTY
+     IPDATED      DS
+     I                                        1   60WDATE
+     IPPRICD      DS
+     I                                        1   72WPRICE
+     C           *ENTRY    PLIST
+     C                     PARM           PCUSTD
+     C                     PARM           PITEMD
+     C                     PARM           PQTYD
+     C                     PARM           PDATED
+     C                     PARM           PPRICD
+     C                     PARM           WSRC    1
+     C           CTKEY     KLIST
+     C                     KFLD           WCUST
+     C                     KFLD           WITEM
+     C           PLKEY     KLIST
+     C                     KFLD           WITEM
+     C                     KFLD           PCLASS
+     C*
+     C                     Z-ADD0         WPRICE
+     C                     MOVE ' '       WSRC
+     C                     MOVE '0'       WCLASS  1
+     C                     Z-ADDWCUST     CUST#
+     C           CUST#     CHAINCUSTMAST             90
+     C  N90                MOVE PCLASS    WCLASS
+     C           WITEM     CHAINITEMMAST             91
+     C   91                MOVE 'X'       WSRC
+     C   91                GOTO DONE
+     C* WINDOW THE ORDER DATE SO 00-49 COMPARES AFTER 98
+     C                     Z-ADDWDATE     WDTIN   60
+     C                     EXSR WINDOW
+     C                     Z-ADDWDTOUT    WORDDT  70
+     C* 1. CONTRACT PRICE IN EFFECT ON THE ORDER DATE
+     C           CTKEY     SETLLCONTRACT
+     C           CTKEY     READECONTRACT                 92
+     C           *IN92     DOWEQ'0'
+     C           WSRC      ANDEQ' '
+     C                     Z-ADDCEFFDT    WDTIN
+     C                     EXSR WINDOW
+     C                     Z-ADDWDTOUT    WEFF    70
+     C                     Z-ADDCEXPDT    WDTIN
+     C                     EXSR WINDOW
+     C                     Z-ADDWDTOUT    WEXP    70
+     C           WORDDT    IFGE WEFF
+     C           WORDDT    ANDLEWEXP
+     C                     Z-ADDCPRICE    WPRICE
+     C                     MOVE 'C'       WSRC
+     C                     END
+     C           CTKEY     READECONTRACT                 92
+     C                     END
+     C* 2. PRICE CLASS PRICE   3. LIST PRICE (CLASS 0)
+     C           WSRC      IFEQ ' '
+     C                     MOVE WCLASS    PCLASS
+     C           PLKEY     CHAINPRICELST             93
+     C           *IN93     IFEQ '0'
+     C                     Z-ADDLPRICE    WPRICE
+     C                     MOVE 'P'       WSRC
+     C                     ELSE
+     C                     MOVE '0'       PCLASS
+     C           PLKEY     CHAINPRICELST             94
+     C           *IN94     IFEQ '0'
+     C                     Z-ADDLPRICE    WPRICE
+     C                     MOVE 'L'       WSRC
+     C                     END
+     C                     END
+     C* SCHOOLS GET 2 PCT OFF ANYTHING NOT ON CONTRACT  (TM 06/01)
+     C           WCLASS    IFEQ 'S'
+     C           WSRC      ANDNE' '
+     C                     MULT .98       WPRICE    H
+     C                     END
+     C                     END
+     C* CATCH WEIGHT ITEMS ARE PRICED PER LB - CONVERT TO PER CASE
+     C           CWFLAG    IFEQ 'Y'
+     C           WSRC      ANDNE' '
+     C                     MULT AVGWGT    WPRICE    H
+     C                     END
+     C           DONE      TAG
+     C                     SETON                     LR
+     C                     RETRN
+     C* Y2K WINDOW: YY UNDER 50 IS 20YY. ADD 1000000 SO 26 SORTS AFTER 98
+     C           WINDOW    BEGSR
+     C                     Z-ADDWDTIN     WDTOUT  70
+     C           WDTIN     IFLT 500000
+     C                     ADD  1000000   WDTOUT
+     C                     END
+     C                     ENDSR

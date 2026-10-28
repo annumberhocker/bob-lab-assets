@@ -1,0 +1,6 @@
+     A***TEXT:Order lines by item
+     A*
+     A*Order lines by item
+     A*
+     A          R ORDDTLR                   PFILE(ORDDTL)
+     A          K DITEM

@@ -1,0 +1,70 @@
+     H***TEXT:Route sheet print
+     H*
+     H* RP010  - ROUTE SHEETS FOR A DELIVERY DATE       DKOWALSKI  06/11/98
+     H* CALLED BY ORDCUTOF AFTER ALLOCATION. ONE HEADER PER ROUTE,
+     H* ONE LINE PER CUSTOMER STOP, ONE LINE PER ORDER LINE.
+     H* OVERFLOW IS INDICATOR 99: EXTERNALLY DESCRIBED PRTF, OA-OV NOT ALLOWED.
+     H*
+     FORDHDRL1IF  E           K        DISK
+     FCUSTMASTIF  E           K        DISK
+     FORDDTL  IF  E           K        DISK
+     FITEMMASTIF  E           K        DISK
+     FRP010PF O   E             99     PRINTER
+     IKEYDS       DS
+     I                                        1   60CUST#
+     IPDATED      DS
+     I                                        1   60WDLVDT
+     C           *ENTRY    PLIST
+     C                     PARM           PDATED
+     C           HDKEY     KLIST
+     C                     KFLD           WDLVDT
+     C           DTKEY     KLIST
+     C                     KFLD           ORDNO
+     C                     Z-ADD0         WROUTE  30
+     C                     Z-ADD0         PCASES
+     C                     Z-ADDWDLVDT    PDLVDT
+     C           HDKEY     SETLLORDHDRL1
+     C           HDKEY     READEORDHDRL1                 80
+     C           *IN80     DOWEQ'0'
+     C           OSTAT     IFNE 'O'
+     C           OROUTE    IFNE WROUTE
+     C                     Z-ADDOROUTE    WROUTE
+     C                     Z-ADDOROUTE    PROUTE
+     C                     WRITERP010H1
+     C                     END
+     C                     Z-ADDOCUST     CUST#
+     C           CUST#     CHAINCUSTMAST             90
+     C                     MOVE *BLANKS   PNAME
+     C  N90                MOVE CNAME     PNAME
+     C                     Z-ADDOSTOP     PSTOP
+     C                     Z-ADDOCUST     PCUST
+     C                     EXSR PRTOVF
+     C                     WRITERP010C1
+     C           DTKEY     SETLLORDDTL
+     C           DTKEY     READEORDDTL                   81
+     C           *IN81     DOWEQ'0'
+     C           DITEM     CHAINITEMMAST             91
+     C                     MOVE *BLANKS   PIDESC
+     C  N91                MOVE IDESC     PIDESC
+     C                     Z-ADDDLINE     PLINE
+     C                     Z-ADDDITEM     PITEM
+     C                     Z-ADDQTYORD    PQTY
+     C                     Z-ADDQTYSHP    PSHIP
+     C                     MOVE SUBFLG    PSUB
+     C                     ADD  QTYSHP    PCASES
+     C                     EXSR PRTOVF
+     C                     WRITERP010D1
+     C           DTKEY     READEORDDTL                   81
+     C                     END
+     C                     END
+     C           HDKEY     READEORDHDRL1                 80
+     C                     END
+     C                     WRITERP010T1
+     C                     SETON                     LR
+     C                     RETRN
+     C           PRTOVF    BEGSR
+     C           *IN99     IFEQ '1'
+     C                     WRITERP010H1
+     C                     SETOF                     99
+     C                     END
+     C                     ENDSR

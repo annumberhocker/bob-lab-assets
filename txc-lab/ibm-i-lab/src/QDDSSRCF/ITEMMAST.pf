@@ -1,0 +1,18 @@
+     A***TEXT:Item master
+     A*
+     A*Item master
+     A*DIST400 foodservice distribution sample  (c) lab kit
+     A*
+     A                                      UNIQUE
+     A          R ITEMMASR                  TEXT('Item master')
+     A            ITEMNO         6S 0       COLHDG('Item')
+     A            IDESC         30A         COLHDG('Description')
+     A            IPACK         10A         COLHDG('Pack/size')
+     A            IBRAND        10A         COLHDG('Brand')
+     A            ICATEG         3A         COLHDG('Category')
+     A            IZONE          1A         COLHDG('Zone D/C/F')
+     A            CWFLAG         1A         COLHDG('Catch wt')
+     A            AVGWGT         7P 2       COLHDG('Avg weight')
+     A            UNITPK         5B 0       COLHDG('Units/case')
+     A            SHELFL         5B 0       COLHDG('Shelf days')
+     A          K ITEMNO

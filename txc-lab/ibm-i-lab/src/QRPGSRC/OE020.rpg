@@ -1,0 +1,74 @@
+     H***TEXT:Pick confirm - catch weight entry
+     H*
+     H* OE020  - PICK CONFIRM / CATCH WEIGHT            DKOWALSKI  05/20/98
+     H* PICKER KEYS ORDER AND LINE, SCALE WEIGHT, F6 TO RECORD.
+     H* FUNCTION KEYS READ FROM THE WORKSTN FEEDBACK AREA, NOT INDICATORS.
+     H*
+     FOE020DF CF  E                    WORKSTN
+     F                                              KINFDS WSDS
+     FORDDTL  UF  E           K        DISK
+     FORDHDR  IF  E           K        DISK
+     FCUSTMASTIF  E           K        DISK
+     FITEMMASTIF  E           K        DISK
+     E                    MSG     1  10 50
+     IWSDS        DS
+     I                                      369 369 KEY
+     IKEYDS       DS
+     I                                        1   60CUST#
+     C           DTKEY     KLIST
+     C                     KFLD           SORDNO
+     C                     KFLD           SLINE
+     C           KEY       DOWNEX'33'
+     C                     EXFMTOE020R1
+     C                     MOVE *BLANKS   SMSG
+     C           KEY       IFEQ X'3C'
+     C                     EXSR RESET
+     C                     END
+     C           KEY       IFNE X'33'
+     C           KEY       ANDNEX'3C'
+     C                     EXSR SHOW
+     C                     END
+     C                     END
+     C                     SETON                     LR
+     C                     RETRN
+     C           SHOW      BEGSR
+     C           DTKEY     CHAINORDDTL               90
+     C           *IN90     IFEQ '1'
+     C                     MOVE MSG,8     SMSG
+     C                     GOTO SHOWND
+     C                     END
+     C           DORDNO    CHAINORDHDR               91
+     C                     Z-ADDOCUST     CUST#
+     C           CUST#     CHAINCUSTMAST             92
+     C  N92                MOVE CNAME     SNAME
+     C           DITEM     CHAINITEMMAST             93
+     C                     Z-ADDDITEM     SITEM
+     C  N93                MOVE IDESC     SIDESC
+     C                     Z-ADDQTYSHP    SQTY
+     C* X'36' IS F6
+     C           KEY       IFEQ X'36'
+     C                     Z-ADDSCWGHT    CWGHT
+     C                     UPDATORDDTLR
+     C                     MOVE MSG,7     SMSG
+     C                     END
+     C           SHOWND    ENDSR
+     C           RESET     BEGSR
+     C                     Z-ADD0         SORDNO
+     C                     Z-ADD0         SLINE
+     C                     Z-ADD0         SITEM
+     C                     Z-ADD0         SQTY
+     C                     Z-ADD0         SCWGHT
+     C                     MOVE *BLANKS   SNAME
+     C                     MOVE *BLANKS   SIDESC
+     C                     ENDSR
+**
+CUSTOMER NOT FOUND                                
+ITEM NOT FOUND                                    
+LINE ADDED - ENTER NEXT ITEM OR F3 TO EXIT        
+ORDER CANCELLED                                   
+ENTER QUANTITY                                    
+ITEM NOT PRICED                                   
+WEIGHT RECORDED                                   
+ORDER LINE NOT FOUND                              
+CUSTOMER UPDATED                                  
+CUSTOMER ADDED                                    

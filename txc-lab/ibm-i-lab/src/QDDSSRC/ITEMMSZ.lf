@@ -1,0 +1,16 @@
+     A***TEXT:Item master, binary fields as zoned
+     A*
+     A*Item master, binary fields as zoned
+     A*
+     A          R ITEMMSZR                  PFILE(ITEMMAST)
+     A            ITEMNO
+     A            IDESC
+     A            IPACK
+     A            IBRAND
+     A            ICATEG
+     A            IZONE
+     A            CWFLAG
+     A            AVGWGT
+     A            UNITPK         5S 0
+     A            SHELFL         5S 0
+     A          K ITEMNO

@@ -1,0 +1,11 @@
+     A***TEXT:Inventory balance, binary as zoned
+     A*
+     A*Inventory balance, binary as zoned
+     A*
+     A          R INVBALZR                  PFILE(INVBAL)
+     A            IWHSE
+     A            IITEM
+     A            ONHAND         9S 0
+     A            ALLOC          9S 0
+     A          K IWHSE
+     A          K IITEM

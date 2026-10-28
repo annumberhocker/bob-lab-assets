@@ -1,0 +1,84 @@
+     H***TEXT:Customer maintenance
+     H*
+     H* CM001  - CUSTOMER MAINTENANCE                   DKOWALSKI  03/04/98
+     H* ENTER RETRIEVES, F6 UPDATES OR ADDS, F12 CLEARS.
+     H*
+     FCM001DF CF  E                    WORKSTN
+     FCUSTMASTUF  E           K        DISK                      A
+     E                    MSG     1  10 50
+     IKEYDS       DS
+     I                                        1   60CUST#
+     C           *IN03     DOWEQ'0'
+     C                     EXFMTCM001R1
+     C                     MOVE *BLANKS   SMSG
+     C           *IN03     IFEQ '0'
+     C           *IN12     IFEQ '1'
+     C                     EXSR RESET
+     C                     ELSE
+     C           *IN06     IFEQ '1'
+     C                     EXSR SAVE
+     C                     ELSE
+     C                     EXSR GET
+     C                     END
+     C                     END
+     C                     END
+     C                     END
+     C                     SETON                     LR
+     C                     RETRN
+     C           GET       BEGSR
+     C                     Z-ADDSCUST     CUST#
+     C           CUST#     CHAINCUSTMAST             90
+     C           *IN90     IFEQ '1'
+     C                     MOVE MSG,1     SMSG
+     C                     ELSE
+     C                     MOVE CNAME     SNAME
+     C                     MOVE CADDR     SADDR
+     C                     MOVE CCITY     SCITY
+     C                     MOVE CSTATE    SSTATE
+     C                     Z-ADDCROUTE    SROUTE
+     C                     Z-ADDCSTOP     SSTOP
+     C                     MOVE PCLASS    SPCLAS
+     C                     END
+     C                     ENDSR
+     C           SAVE      BEGSR
+     C                     Z-ADDSCUST     CUST#
+     C           CUST#     CHAINCUSTMAST             90
+     C                     Z-ADDSCUST     CUSTNO
+     C                     MOVE SNAME     CNAME
+     C                     MOVE SADDR     CADDR
+     C                     MOVE SCITY     CCITY
+     C                     MOVE SSTATE    CSTATE
+     C                     Z-ADDSROUTE    CROUTE
+     C                     Z-ADDSSTOP     CSTOP
+     C                     MOVE SPCLAS    PCLASS
+     C           *IN90     IFEQ '1'
+     C                     MOVE 'YNYNYNN' DLVDAY
+     C                     MOVE 'A'       CSTAT
+     C                     WRITECUSTMASR
+     C                     MOVE MSG,10    SMSG
+     C                     ELSE
+     C                     UPDATCUSTMASR
+     C                     MOVE MSG,9     SMSG
+     C                     END
+     C                     ENDSR
+     C           RESET     BEGSR
+     C                     Z-ADD0         SCUST
+     C                     MOVE *BLANKS   SNAME
+     C                     MOVE *BLANKS   SADDR
+     C                     MOVE *BLANKS   SCITY
+     C                     MOVE *BLANKS   SSTATE
+     C                     Z-ADD0         SROUTE
+     C                     Z-ADD0         SSTOP
+     C                     MOVE ' '       SPCLAS
+     C                     ENDSR
+**
+CUSTOMER NOT FOUND                                
+ITEM NOT FOUND                                    
+LINE ADDED - ENTER NEXT ITEM OR F3 TO EXIT        
+ORDER CANCELLED                                   
+ENTER QUANTITY                                    
+ITEM NOT PRICED                                   
+WEIGHT RECORDED                                   
+ORDER LINE NOT FOUND                              
+CUSTOMER UPDATED                                  
+CUSTOMER ADDED                                    

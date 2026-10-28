@@ -1,0 +1,16 @@
+     A***TEXT:Order header
+     A*
+     A*Order header
+     A*DIST400 foodservice distribution sample  (c) lab kit
+     A*
+     A                                      UNIQUE
+     A          R ORDHDRR                   TEXT('Order header')
+     A            ORDNO          7S 0       COLHDG('Order')
+     A            OCUST          6S 0       COLHDG('Customer')
+     A            ODLVDT         6S 0       COLHDG('Delivery YYMMDD')
+     A            OROUTE         3S 0       COLHDG('Route')
+     A            OSTOP          3S 0       COLHDG('Stop')
+     A            OSTAT          1A         COLHDG('Status')
+     A            OENTDT         6S 0       COLHDG('Entered YYMMDD')
+     A            OENTBY        10A         COLHDG('Entered by')
+     A          K ORDNO

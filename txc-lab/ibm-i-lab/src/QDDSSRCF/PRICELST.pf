@@ -1,0 +1,12 @@
+     A***TEXT:Price list by price class
+     A*
+     A*Price list by price class
+     A*DIST400 foodservice distribution sample  (c) lab kit
+     A*
+     A                                      UNIQUE
+     A          R PRICELSR                  TEXT('Price list by price class')
+     A            PITEM          6S 0       COLHDG('Item')
+     A            PCLASS         1A         COLHDG('Price class')
+     A            LPRICE         7P 2       COLHDG('Price')
+     A          K PITEM
+     A          K PCLASS

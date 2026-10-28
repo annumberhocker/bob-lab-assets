@@ -1,0 +1,29 @@
+     A***TEXT:Inventory inquiry
+     A*
+     A*Inventory inquiry
+     A*
+     A                                      DSPSIZ(24 80 *DS3)
+     A                                      CF03(03 'Exit')
+     A          R IN001R1
+     A                                      OVERLAY
+     A                                  1  2'DIST400'
+     A                                  1 30'INVENTORY INQUIRY'
+     A                                  1 70DATE EDTCDE(Y)
+     A                                  3  2'Item . . . . :'
+     A            SITEM          6Y 0B  3 17
+     A            SIDESC        30A  O  3 26
+     A                                  5  2'Zone . . . . :'
+     A            SZONE          1A  O  5 17
+     A                                  5 22'(D=Dry C=Cooler F=Freezer)'
+     A                                  7  2'On hand  . . :'
+     A            SONHND         9Y 0O  7 17EDTCDE(Z)
+     A                                  8  2'Allocated  . :'
+     A            SALLOC         9Y 0O  8 17EDTCDE(Z)
+     A                                  9  2'Available  . :'
+     A            SAVAIL         9Y 0O  9 17EDTCDE(Z)
+     A                                 11  2'Units/case . :'
+     A            SUNITP         5Y 0O 11 17EDTCDE(Z)
+     A                                 12  2'Shelf days . :'
+     A            SSHELF         5Y 0O 12 17EDTCDE(Z)
+     A                                 23  2'Enter=Inquire   F3=Exit'
+     A            SMSG          50A  O 22  2

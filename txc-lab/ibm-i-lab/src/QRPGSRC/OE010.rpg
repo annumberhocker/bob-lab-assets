@@ -1,0 +1,71 @@
+     H***TEXT:Allocate order lines and substitute
+     H*
+     H* OE010  - ALLOCATE ORDER LINES / SUBSTITUTE      DKOWALSKI  04/02/98
+     H* CALLED WITH ORDER NUMBER BY OE001 (RELEASE) AND OE011 (CUTOFF).
+     H* TAKES STOCK FROM WHSE 01. IF SHORT, TRIES THE SUBSTITUTE ITEM.
+     H* LINES WITH QTYSHP ALREADY SET ARE SKIPPED SO A RERUN IS SAFE.
+     H*
+     FORDDTL  UF  E           K        DISK
+     FINVBALZ UF  E           K        DISK
+     FSUBITEM IF  E           K        DISK
+     FORDHDR  UF  E           K        DISK
+     IPORDD       DS
+     I                                        1   70WORDNO
+     C           *ENTRY    PLIST
+     C                     PARM           PORDD
+     C           DTKEY     KLIST
+     C                     KFLD           WORDNO
+     C           IVKEY     KLIST
+     C                     KFLD           WWHSE
+     C                     KFLD           WIITEM
+     C                     MOVE '01'      WWHSE   2
+     C                     Z-ADD0         WIITEM  60
+     C           DTKEY     SETLLORDDTL
+     C           DTKEY     READEORDDTL                   80
+     C           *IN80     DOWEQ'0'
+     C* SKIP LINES ALREADY ALLOCATED - THIS IS WHAT MAKES A RERUN SAFE
+     C           QTYSHP    IFEQ 0
+     C                     Z-ADDDITEM     WIITEM
+     C                     EXSR GETQTY
+     C           WALLOC    IFEQ 0
+     C           DITEM     CHAINSUBITEM              81
+     C           *IN81     IFEQ '0'
+     C                     Z-ADDSSUB      WIITEM
+     C                     EXSR GETQTY
+     C           WALLOC    IFNE 0
+     C                     Z-ADDDITEM     DOITEM
+     C                     Z-ADDSSUB      DITEM
+     C                     MOVE 'Y'       SUBFLG
+     C                     END
+     C                     END
+     C                     END
+     C                     Z-ADDWALLOC    QTYSHP
+     C                     UPDATORDDTLR
+     C                     END
+     C           DTKEY     READEORDDTL                   80
+     C                     END
+     C* MARK THE ORDER ALLOCATED
+     C           WORDNO    CHAINORDHDR               82
+     C  N82                MOVE 'A'       OSTAT
+     C  N82                UPDATORDHDRR
+     C                     SETON                     LR
+     C                     RETRN
+     C* GETQTY: TAKE WHAT WHSE 01 HAS FOR WIITEM, RETURN WALLOC
+     C           GETQTY    BEGSR
+     C                     Z-ADD0         WALLOC  50
+     C           IVKEY     CHAININVBALZ              83
+     C           *IN83     IFEQ '0'
+     C           ONHAND    SUB  ALLOC     WAVAIL  90
+     C           WAVAIL    IFGE QTYORD
+     C                     Z-ADDQTYORD    WALLOC
+     C                     ELSE
+     C           WAVAIL    IFGT 0
+     C                     Z-ADDWAVAIL    WALLOC
+     C                     END
+     C                     END
+     C           WALLOC    IFGT 0
+     C                     ADD  WALLOC    ALLOC
+     C                     UPDATINVBALZR
+     C                     END
+     C                     END
+     C                     ENDSR

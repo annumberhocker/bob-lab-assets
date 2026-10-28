@@ -1,0 +1,30 @@
+     A***TEXT:Route sheet printer file
+     A*
+     A*Route sheet printer file
+     A*
+     A          R RP010H1                   SKIPB(1) SPACEA(2)
+     A                                     2'DIST400'
+     A                                    25'ROUTE SHEET FOR DELIVERY'
+     A            PDLVDT         6S 0O    51
+     A                                    60'ROUTE'
+     A            PROUTE         3S 0O    66EDTCDE(Z)
+     A                                    72'PAGE'
+     A                                    77PAGNBR
+     A          R RP010C1                   SPACEB(1)
+     A                                     2'STOP'
+     A            PSTOP          3S 0O     7EDTCDE(Z)
+     A                                    12'CUST'
+     A            PCUST          6S 0O    17
+     A            PNAME         30A  O    25
+     A          R RP010D1                   SPACEB(1)
+     A            PLINE          3S 0O     5EDTCDE(Z)
+     A            PITEM          6S 0O    10
+     A            PIDESC        30A  O    18
+     A                                    50'ORD'
+     A            PQTY           5S 0O    54EDTCDE(Z)
+     A                                    61'SHP'
+     A            PSHIP          5S 0O    65EDTCDE(Z)
+     A            PSUB           1A  O    72
+     A          R RP010T1                   SPACEB(2)
+     A                                     2'TOTAL CASES TO LOAD'
+     A            PCASES         7S 0O    24EDTCDE(Z)

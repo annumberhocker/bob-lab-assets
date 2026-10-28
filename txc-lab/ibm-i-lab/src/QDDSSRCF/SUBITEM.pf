@@ -1,0 +1,10 @@
+     A***TEXT:Substitution items
+     A*
+     A*Substitution items
+     A*DIST400 foodservice distribution sample  (c) lab kit
+     A*
+     A                                      UNIQUE
+     A          R SUBITEMR                  TEXT('Substitution items')
+     A            SITEM          6S 0       COLHDG('Item')
+     A            SSUB           6S 0       COLHDG('Substitute')
+     A          K SITEM
